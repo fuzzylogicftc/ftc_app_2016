@@ -69,7 +69,7 @@ public class TwoMotorDrivetrainSmooth extends OpMode{
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
         updateTelemetry(telemetry);
-    }
+    } 
 
     /*
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
