@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Two Motor Drivetrain Test")
+@TeleOp(name="Two Motor Drivetrain (Smooth) Test")
 public class TwoMotorDrivetrainSmooth extends OpMode{
 
     /* Declare OpMode members. */
