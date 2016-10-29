@@ -74,10 +74,11 @@ public class SpinAutonomousTest extends LinearOpMode {
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     PI                      = 3.1415;   // pi!
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
+                                                      (WHEEL_DIAMETER_INCHES * PI);
     static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     TURN_SPEED              = 0.2;
     static final double     WHEEL_DIST_INCHES       = 14.25;    // Distance between the wheels
 
     @Override
@@ -111,8 +112,8 @@ public class SpinAutonomousTest extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        turnDrive(DRIVE_SPEED, 45, 5.0);  // S1: Turn right 45 Degrees with 5 Sec timeout
-        turnDrive(DRIVE_SPEED, -90, 5.0);  // S1: Turn left 90 Degrees with 5 Sec timeout
+        turnDrive(TURN_SPEED, 90, 5.0);  // S1: Turn right 90 Degrees with 5 Sec timeout
+        turnDrive(TURN_SPEED, -90, 5.0);  // S1: Turn left 90 Degrees with 5 Sec timeout
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -180,7 +181,7 @@ public class SpinAutonomousTest extends LinearOpMode {
     }
 
     public void turnDrive (double speed, double angle, double timeoutS) throws InterruptedException {
-        double arcLength = WHEEL_DIST_INCHES * 3.1415 / 360 * angle;
+        double arcLength = WHEEL_DIST_INCHES * PI / 360 * angle;
         encoderDrive(speed, arcLength, -arcLength, timeoutS);
     }
 }
