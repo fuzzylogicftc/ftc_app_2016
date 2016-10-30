@@ -100,8 +100,8 @@ public class TwoMotorDrivetrainSmooth extends OpMode{
         lt = gamepad1.left_trigger;
         rt = gamepad1.right_trigger;
 
-        leftRaw = gamepad1.left_stick_y;
-        rightRaw = gamepad1.right_stick_y;
+        leftRaw = gamepad1.right_stick_y;
+        rightRaw = gamepad1.left_stick_y;
 
         leftScaled = scaleInput(leftRaw, lt, rt);
         rightScaled = scaleInput(rightRaw, lt, rt);
