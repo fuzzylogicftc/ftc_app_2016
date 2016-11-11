@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * This file provides basic Telop driving for a Pushbot robot.
@@ -50,11 +51,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="ConceptFlicker")
-public class ConceptFlicker extends OpMode{
+@TeleOp(name="Paddle Drivetrain")
+public class PaddleDrivetrain extends OpMode{
 
     /* Declare OpMode members. */
-    FlickerHardware robot = new FlickerHardware();
+    PaddleBot robot = new PaddleBot();
+    double PADDLE_SPEED = 0.7; // speed of the paddle
      /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -89,24 +91,92 @@ public class ConceptFlicker extends OpMode{
      */
     @Override
     public void loop() {
-        double flickPower = 0;
-        if (gamepad1.a) {
-            flickPower = -0.1;
-        } else if (gamepad1.b) {
-            flickPower = 1;
-        } else {
-            flickPower = 0;
-        }
-        robot.flickerMotor.setPower(flickPower);
+        double lt;
+        double rt;
+        double leftRaw;
+        double rightRaw;
+        double leftScaled;
+        double rightScaled;
+        double paddle;
+
+        boolean rb;
+        boolean lb;
+
+        lt = gamepad1.left_trigger;
+        rt = gamepad1.right_trigger;
+
+        rb = gamepad1.right_bumper;
+        lb = gamepad1.left_bumper;
+
+        leftRaw = -gamepad1.left_stick_y;
+        rightRaw = -gamepad1.right_stick_y;
+
+        leftScaled = scaleInput(leftRaw, lt, rt);
+        rightScaled = scaleInput(rightRaw, lt, rt);
+        paddle = getPaddle(rb, lb);
+
+        robot.leftMotor.setPower(leftScaled);
+        robot.rightMotor.setPower(rightScaled);
+        robot.paddleMotor.setPower(paddle);
 
         // Send telemetry message to signify robot running;
-        telemetry.addData("flickerPower",  "%.2f", flickPower);
+        telemetry.addData("left",  "%.2f", leftScaled);
+        telemetry.addData("right", "%.2f", rightScaled);
+        telemetry.addData("paddle", "%.2f", paddle);
+        telemetry.addData("gamepad",  gamepad1.toString());
         updateTelemetry(telemetry);
+    }
+
+    double scaleInput(double dVal, double lt, double rt) {
+
+        double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
+                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00};
+
+        // get the corresponding index for the scaleInput array.
+        int index = (int) (dVal * 16.0);
+
+        // index should be positive.
+        if (index < 0) {
+            index = -index;
+        }
+
+        // index cannot exceed size of array minus 1.
+        if (index > 16) {
+            index = 16;
+        }
+
+        // get value from the array.
+        double dScale;
+        if (dVal < 0) {
+           dScale = -scaleArray[index];
+        } else {
+            dScale = scaleArray[index];
+        }
+        double more_scale = 0.4;
+        if (rt >= 0.1) {
+            more_scale = Range.clip(more_scale + 0.6 * rt, 0, 1);
+        } else if (lt >= 0.1) {
+            more_scale = Range.clip(more_scale - 0.4 * lt, 0.05, 1);
+        }
+        dScale = dScale * more_scale;
+        // return scaled value.
+        return dScale;
     }
 
     /*
      * Code to run ONCE after the driver hits STOP
      */
+
+    double getPaddle(boolean rb, boolean lb) {
+        double paddle = 0.0;
+        if (rb) {
+            paddle = PADDLE_SPEED;
+        }
+        else if (lb) {
+            paddle = -PADDLE_SPEED;
+        }
+        return paddle;
+    }
     @Override
     public void stop() {
     }
