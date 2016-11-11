@@ -76,8 +76,8 @@ public class AutonomousRed extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.3;
-    static final double     TURN_SPEED              = 0.25;
+    static final double     DRIVE_SPEED             = 0.5;
+    static final double     TURN_SPEED              = 0.5;
     static final double     PI                      = 3.1415;   // pi!
     static final double     WHEEL_DIST_INCHES       = 14.25;    // Distance between the wheels
     static final int        PAUSE_MOVEMENT          = 250;      // pause between each movement
@@ -113,7 +113,9 @@ public class AutonomousRed extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  40,  40, 10.0);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(DRIVE_SPEED,  54,  54, 10.0);  // S1: forward 48 inches with 10 sec timeout
+        turnDrive(TURN_SPEED,  -45, 10.0);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(0.6,  18, 18, 10.0);  // S1: forward 48 inches with 10 sec timeout
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
