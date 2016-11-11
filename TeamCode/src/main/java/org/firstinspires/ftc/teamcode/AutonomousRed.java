@@ -33,12 +33,9 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -67,8 +64,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Drive by Encoder")
-public class TwoMotorDrivetrainEncoder extends LinearOpMode {
+@Autonomous(name="Autonomous Red")
+public class AutonomousRed extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareRobot robot   = new HardwareRobot();
@@ -78,7 +75,7 @@ public class TwoMotorDrivetrainEncoder extends LinearOpMode {
     static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.3;
     static final double     TURN_SPEED              = 0.25;
     static final double     PI                      = 3.1415;   // pi!
@@ -116,10 +113,7 @@ public class TwoMotorDrivetrainEncoder extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  30,  30, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   6, -6, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, 24, 24, 4.0);  // S3: Forward 36 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -36, -36, 4.0);  // S3: Forward 36 Inches with 4 Sec timeout
+        encoderDrive(DRIVE_SPEED,  40,  40, 10.0);  // S1: forward 48 inches with 10 sec timeout
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -143,8 +137,8 @@ public class TwoMotorDrivetrainEncoder extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.leftMotor.getCurrentPosition() + (int)(-leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.rightMotor.getCurrentPosition() + (int)(-rightInches * COUNTS_PER_INCH);
+            newLeftTarget = robot.leftMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightTarget = robot.rightMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
             robot.leftMotor.setTargetPosition(newLeftTarget);
             robot.rightMotor.setTargetPosition(newRightTarget);
 
@@ -184,7 +178,6 @@ public class TwoMotorDrivetrainEncoder extends LinearOpMode {
 
             sleep(PAUSE_MOVEMENT);   // pause after each move so that movements are more accurate
         }
-
     }
     public void turnDrive (double speed, double angle, double timeoutS) throws InterruptedException {
         double arcLength = WHEEL_DIST_INCHES * PI / 360 * angle;

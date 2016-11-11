@@ -97,8 +97,8 @@ public class TwoMotorDrivetrainSmooth extends OpMode{
         double leftScaled;
         double rightScaled;
 
-        lt = -gamepad1.left_trigger;
-        rt = -gamepad1.right_trigger;
+        lt = gamepad1.left_trigger;
+        rt = gamepad1.right_trigger;
 
         leftRaw = -gamepad1.left_stick_y;
         rightRaw = -gamepad1.right_stick_y;
@@ -111,7 +111,8 @@ public class TwoMotorDrivetrainSmooth extends OpMode{
 
         // Send telemetry message to signify robot running;
         telemetry.addData("left",  "%.2f", leftScaled);
-        telemetry.addData("right", "%.2f", leftRaw);
+        telemetry.addData("right", "%.2f", rightScaled);
+        telemetry.addData("gamepad",  gamepad1.toString());
         updateTelemetry(telemetry);
     }
 
@@ -142,7 +143,7 @@ public class TwoMotorDrivetrainSmooth extends OpMode{
         }
         double more_scale = 0.4;
         if (rt >= 0.1) {
-            more_scale = Range.clip(more_scale + 0.6 * rt, 0.1, 1);
+            more_scale = Range.clip(more_scale + 0.6 * rt, 0, 1);
         } else if (lt >= 0.1) {
             more_scale = Range.clip(more_scale - 0.4 * lt, 0.05, 1);
         }
