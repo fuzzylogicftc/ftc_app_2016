@@ -97,11 +97,11 @@ public class TwoMotorDrivetrainSmooth extends OpMode{
         double leftScaled;
         double rightScaled;
 
-        lt = gamepad1.left_trigger;
-        rt = gamepad1.right_trigger;
+        lt = -gamepad1.left_trigger;
+        rt = -gamepad1.right_trigger;
 
-        leftRaw = gamepad1.right_stick_y;
-        rightRaw = gamepad1.left_stick_y;
+        leftRaw = -gamepad1.left_stick_y;
+        rightRaw = -gamepad1.right_stick_y;
 
         leftScaled = scaleInput(leftRaw, lt, rt);
         rightScaled = scaleInput(rightRaw, lt, rt);
@@ -140,11 +140,11 @@ public class TwoMotorDrivetrainSmooth extends OpMode{
         } else {
             dScale = scaleArray[index];
         }
-        double more_scale = 0.7;
-        if (rt >= 0.2) {
-            more_scale = Range.clip(more_scale + 0.3 * rt, 0.1, 1);
-        } else if (lt >= 0.2) {
-            more_scale = Range.clip(more_scale - 0.7 * lt, 0.05, 1);
+        double more_scale = 0.4;
+        if (rt >= 0.1) {
+            more_scale = Range.clip(more_scale + 0.6 * rt, 0.1, 1);
+        } else if (lt >= 0.1) {
+            more_scale = Range.clip(more_scale - 0.4 * lt, 0.05, 1);
         }
         dScale = dScale * more_scale;
         // return scaled value.
