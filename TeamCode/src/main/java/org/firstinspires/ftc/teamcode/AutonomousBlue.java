@@ -64,20 +64,23 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Cap Ball")
-public class CapBallAutonomous extends LinearOpMode {
+@Autonomous(name="Autonomous Blue")
+public class AutonomousBlue extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareRobot robot   = new HardwareRobot();
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double     DRIVE_SPEED             = 0.5;
     static final double     TURN_SPEED              = 0.5;
+    static final double     PI                      = 3.1415;   // pi!
+    static final double     WHEEL_DIST_INCHES       = 14.25;    // Distance between the wheels
+    static final int        PAUSE_MOVEMENT          = 250;      // pause between each movement
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -110,10 +113,9 @@ public class CapBallAutonomous extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  30,  30, 5.0);  // S1: Forward 48 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   6, -6, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, 24, 24, 4.0);  // S3: Forward 36 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -36, -36, 4.0);  // S3: Forward 36 Inches with 4 Sec timeout
+        encoderDrive(DRIVE_SPEED,  54,  54, 10.0);  // S1: forward 48 inches with 10 sec timeout
+        turnDrive(TURN_SPEED,  45, 10.0);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(0.6,  18, 18, 10.0);  // S1: forward 48 inches with 10 sec timeout
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -137,8 +139,8 @@ public class CapBallAutonomous extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.leftMotor.getCurrentPosition() + (int)(-leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.rightMotor.getCurrentPosition() + (int)(-rightInches * COUNTS_PER_INCH);
+            newLeftTarget = robot.leftMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightTarget = robot.rightMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
             robot.leftMotor.setTargetPosition(newLeftTarget);
             robot.rightMotor.setTargetPosition(newRightTarget);
 
@@ -176,7 +178,11 @@ public class CapBallAutonomous extends LinearOpMode {
             robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            sleep(250);   // pause after each move so that movements are more accurate
+            sleep(PAUSE_MOVEMENT);   // pause after each move so that movements are more accurate
         }
+    }
+    public void turnDrive (double speed, double angle, double timeoutS) throws InterruptedException {
+        double arcLength = WHEEL_DIST_INCHES * PI / 360 * angle;
+        encoderDrive(speed, arcLength, -arcLength, timeoutS);
     }
 }
