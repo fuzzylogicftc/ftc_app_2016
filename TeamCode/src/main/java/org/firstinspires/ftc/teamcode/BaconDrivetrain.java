@@ -99,6 +99,7 @@ public class BaconDrivetrain extends OpMode{
         double rightRaw;
         double leftScaled;
         double rightScaled;
+        double baconOffset = 0;
 
         lt = gamepad1.left_trigger;
         rt = gamepad1.right_trigger;
@@ -110,11 +111,20 @@ public class BaconDrivetrain extends OpMode{
 
         leftScaled = scaleInput(leftRaw, lt, rt);
         rightScaled = scaleInput(rightRaw, lt, rt);
-        baconSpeed = getBacon(x, y);
 
+        // Use gamepad left & right Bumpers to open and close the claw
+        if (x)
+            baconOffset += robot.BACON_SPEED ;
+        else if (y)
+            baconOffset -= robot.BACON_SPEED;
+
+        // Move both servos to new position.  Assume servos are mirror image of each other.
+        baconOffset = Range.clip(baconOffset, -0.5, 0.5);
+        robot.baconMotor.setPosition(robot.baconMotor.getPosition() + baconOffset);
 
         robot.leftMotor.setPower(leftScaled);
         robot.rightMotor.setPower(rightScaled);
+
 
         // Send telemetry message to signify robot running;
         telemetry.addData("left",  "%.2f", leftScaled);

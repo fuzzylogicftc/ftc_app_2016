@@ -26,7 +26,7 @@ public class BaconBot
     public Servo baconMotor = null;
 
     public static final double MID_SERVO       =  0.5;
-    public static final double BACON_SPEED    =  0.05;
+    public static final double BACON_SPEED    =  0.001;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
