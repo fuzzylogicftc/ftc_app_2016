@@ -64,8 +64,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autonomous Red (ramp only)")
-public class AutonomousRedRamp extends LinearOpMode {
+@Autonomous(name="Autonomous Blue (ramp only)")
+public class AutonomousBlueRamp extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareRobot robot   = new HardwareRobot();
@@ -114,7 +114,7 @@ public class AutonomousRedRamp extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderDrive(DRIVE_SPEED,  30, 30, 10.0);
-        turnDrive(TURN_SPEED, 60, 10.0);
+        turnDrive(TURN_SPEED, -60, 10.0);
         encoderDrive(DRIVE_SPEED,  -60, -60, 10.0);
 
         telemetry.addData("Path", "Complete");
