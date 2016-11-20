@@ -37,32 +37,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * This file illustrates the concept of driving a path based on encoder counts.
- * It uses the common Pushbot hardware class to define the drive on the robot.
- * The code is structured as a LinearOpMode
- *
- * The code REQUIRES that you DO have encoders on the wheels,
- *   otherwise you would use: PushbotAutoDriveByTime;
- *
- *  This code ALSO requires that the drive Motors have been configured such that a positive
- *  power command moves them forwards, and causes the encoders to count UP.
- *
- *   The desired path in this example is:
- *   - Drive forward for 48 inches
- *   - Spin right for 12 Inches
- *   - Drive Backwards for 24 inches
- *   - Stop and close the claw.
- *
- *  The code is written using a method called: encoderDrive(speed, leftInches, rightInches, timeoutS)
- *  that performs the actual movement.
- *  This methods assumes that each movement is relative to the last stopping place.
- *  There are other ways to perform encoder based moves, but this method is probably the simplest.
- *  This code uses the RUN_TO_POSITION mode to enable the Motor controllers to generate the run profile
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
 
 @Autonomous(name="Autonomous Blue")
 public class AutonomousBlue extends LinearOpMode {
@@ -77,10 +51,12 @@ public class AutonomousBlue extends LinearOpMode {
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.5;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     TURN_SPEED              = 0.2;
     static final double     PI                      = 3.1415;   // pi!
     static final double     WHEEL_DIST_INCHES       = 14.25;    // Distance between the wheels
     static final int        PAUSE_MOVEMENT          = 250;      // pause between each movement
+    static final int        LONG_PAUSE_MOVEMENT     = 1000;      // pause between each movement
+    static final int        NO_PAUSE_MOVEMENT       = 0;      // pause between each movement
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -104,8 +80,8 @@ public class AutonomousBlue extends LinearOpMode {
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
-                          robot.leftMotor.getCurrentPosition(),
-                          robot.rightMotor.getCurrentPosition());
+                robot.leftMotor.getCurrentPosition(),
+                robot.rightMotor.getCurrentPosition());
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -113,16 +89,16 @@ public class AutonomousBlue extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  54,  54, 10.0);  // S1: forward 48 inches with 10 sec timeout
-        turnDrive(TURN_SPEED,  45, 10.0);  // S1: forward 48 inches with 10 sec timeout
-        encoderDrive(0.6,  18, 18, 10.0);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(DRIVE_SPEED,  53,  53, 10.0, LONG_PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(0.1,  -1, -1, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(DRIVE_SPEED,  -70, 5, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout\
+        turnDrive(TURN_SPEED, -180, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
     }
 
-    /*
-     *  Method to perform a relative move, based on encoder counts.
+    /*     *  Method to perform a relative move, based on encoder counts.
      *  Encoders are not reset as the move is based on the current position.
      *  Move will stop if any of three conditions occur:
      *  1) Move gets to the desired position
@@ -131,7 +107,7 @@ public class AutonomousBlue extends LinearOpMode {
      */
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
-                             double timeoutS) throws InterruptedException {
+                             double timeoutS, int movementPause) throws InterruptedException {
         int newLeftTarget;
         int newRightTarget;
 
@@ -156,14 +132,14 @@ public class AutonomousBlue extends LinearOpMode {
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             while (opModeIsActive() &&
-                   (runtime.seconds() < timeoutS) &&
-                   (robot.leftMotor.isBusy() && robot.rightMotor.isBusy())) {
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.leftMotor.isBusy() && robot.rightMotor.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
-                                            robot.leftMotor.getCurrentPosition(),
-                                            robot.rightMotor.getCurrentPosition());
+                        robot.leftMotor.getCurrentPosition(),
+                        robot.rightMotor.getCurrentPosition());
                 telemetry.update();
 
                 // Allow time for other processes to run.
@@ -178,11 +154,11 @@ public class AutonomousBlue extends LinearOpMode {
             robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            sleep(PAUSE_MOVEMENT);   // pause after each move so that movements are more accurate
+            sleep(movementPause);   // pause after each move so that movements are more accurate
         }
     }
-    public void turnDrive (double speed, double angle, double timeoutS) throws InterruptedException {
+    public void turnDrive (double speed, double angle, double timeoutS, int movementPause) throws InterruptedException {
         double arcLength = WHEEL_DIST_INCHES * PI / 360 * angle;
-        encoderDrive(speed, arcLength, -arcLength, timeoutS);
+        encoderDrive(speed, arcLength, -arcLength, timeoutS, movementPause);
     }
 }
