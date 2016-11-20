@@ -51,10 +51,12 @@ public class AutonomousRed extends LinearOpMode {
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.5;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     TURN_SPEED              = 0.2;
     static final double     PI                      = 3.1415;   // pi!
     static final double     WHEEL_DIST_INCHES       = 14.25;    // Distance between the wheels
     static final int        PAUSE_MOVEMENT          = 250;      // pause between each movement
+    static final int        LONG_PAUSE_MOVEMENT     = 1000;      // pause between each movement
+    static final int        NO_PAUSE_MOVEMENT       = 0;      // pause between each movement
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -87,11 +89,10 @@ public class AutonomousRed extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  44,  44, 10.0);  // S1: forward 48 inches with 10 sec timeout
-        encoderDrive(0.3 * DRIVE_SPEED,  4, 4, 10.0);  // S1: forward 48 inches with 10 sec timeout
-        turnDrive(TURN_SPEED,  90, 10.0);  // S1: forward 48 inches with 10 sec timeout\
-        encoderDrive(DRIVE_SPEED,  -4,  -4, 10.0);  // S1: forward 48 inches with 10 sec timeout
-//        encoderDrive(DRIVE_SPEED,  4,  4, 10.0);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(DRIVE_SPEED,  48,  48, 10.0, NO_PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        // encoderDrive(0.9,  4, 4, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(DRIVE_SPEED,  5, -70, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout\
+        turnDrive(TURN_SPEED, 90, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -106,7 +107,7 @@ public class AutonomousRed extends LinearOpMode {
      */
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
-                             double timeoutS) throws InterruptedException {
+                             double timeoutS, int movementPause) throws InterruptedException {
         int newLeftTarget;
         int newRightTarget;
 
@@ -153,11 +154,11 @@ public class AutonomousRed extends LinearOpMode {
             robot.leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            sleep(PAUSE_MOVEMENT);   // pause after each move so that movements are more accurate
+            sleep(movementPause);   // pause after each move so that movements are more accurate
         }
     }
-    public void turnDrive (double speed, double angle, double timeoutS) throws InterruptedException {
+    public void turnDrive (double speed, double angle, double timeoutS, int movementPause) throws InterruptedException {
         double arcLength = WHEEL_DIST_INCHES * PI / 360 * angle;
-        encoderDrive(speed, arcLength, -arcLength, timeoutS);
+        encoderDrive(speed, arcLength, -arcLength, timeoutS, movementPause);
     }
 }
