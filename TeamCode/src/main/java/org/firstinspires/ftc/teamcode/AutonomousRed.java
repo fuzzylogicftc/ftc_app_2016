@@ -89,10 +89,10 @@ public class AutonomousRed extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  48,  48, 10.0, NO_PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
-        // encoderDrive(0.9,  4, 4, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(DRIVE_SPEED,  53,  53, 10.0, LONG_PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(0.1,  -1, -1, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
         encoderDrive(DRIVE_SPEED,  5, -70, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout\
-        turnDrive(TURN_SPEED, 90, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        turnDrive(TURN_SPEED, 180, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
