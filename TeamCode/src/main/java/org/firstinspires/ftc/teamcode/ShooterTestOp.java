@@ -92,9 +92,13 @@ public class ShooterTestOp extends OpMode{
     public void loop() {
         boolean x;
         boolean y;
+        boolean a;
+        boolean b;
 
         x = gamepad1.x;
         y = gamepad1.y;
+        a = gamepad1.a;
+        b = gamepad1.b;
 
         if (x) {
             robot.rightWheel.setPower(1);
@@ -103,6 +107,12 @@ public class ShooterTestOp extends OpMode{
         else if (y) {
             robot.leftWheel.setPower(-1);
             robot.rightWheel.setPower(-1);
+        }
+        if (a) {
+            robot.piston.setPosition(Range.clip(robot.piston.getPosition() + 0.1, 0, 1));
+        }
+        else if (b) {
+            robot.piston.setPosition(Range.clip(robot.piston.getPosition() - 0.0001, 0, 1));
         }
         else {
             robot.leftWheel.setPower(0);

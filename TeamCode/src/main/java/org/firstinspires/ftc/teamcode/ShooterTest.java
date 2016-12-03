@@ -23,6 +23,7 @@ public class ShooterTest
     /* Public OpMode members. */
     public DcMotor  leftWheel   = null;
     public DcMotor  rightWheel  = null;
+    public Servo  piston  = null;
 
     public static final double MID_SERVO       =  0;
     public static final double BACON_SPEED    =  0.01;
@@ -44,6 +45,7 @@ public class ShooterTest
         // Define and Initialize Motors
         leftWheel   = hwMap.dcMotor.get("left_wheel");
         rightWheel  = hwMap.dcMotor.get("right_wheel");
+        piston = hwMap.servo.get("piston");
 
         leftWheel.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightWheel.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
