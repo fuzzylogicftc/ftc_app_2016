@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -23,10 +25,8 @@ public class ShooterTest
     /* Public OpMode members. */
     public DcMotor  leftWheel   = null;
     public DcMotor  rightWheel  = null;
-    public Servo  piston  = null;
+    public CRServo piston = null;
 
-    public static final double MID_SERVO       =  0;
-    public static final double BACON_SPEED    =  0.01;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -45,7 +45,10 @@ public class ShooterTest
         // Define and Initialize Motors
         leftWheel   = hwMap.dcMotor.get("left_wheel");
         rightWheel  = hwMap.dcMotor.get("right_wheel");
-        piston = hwMap.servo.get("piston");
+        piston = hwMap.crservo.get("pin");
+
+
+        piston.setDirection(CRServo.Direction.REVERSE);
 
         leftWheel.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightWheel.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -53,6 +56,7 @@ public class ShooterTest
         // Set all motors to zero power
         leftWheel.setPower(0);
         rightWheel.setPower(0);
+        piston.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.

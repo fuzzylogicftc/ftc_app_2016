@@ -103,18 +103,29 @@ public class ShooterTestOp extends OpMode{
         if (x) {
             robot.rightWheel.setPower(1);
             robot.leftWheel.setPower(1);
+            telemetry.addData("", "x");
         }
         else if (y) {
             robot.leftWheel.setPower(-1);
             robot.rightWheel.setPower(-1);
-        }
-        if (a) {
-            robot.piston.setPosition(Range.clip(robot.piston.getPosition() + 0.1, 0, 1));
-        }
-        else if (b) {
-            robot.piston.setPosition(Range.clip(robot.piston.getPosition() - 0.0001, 0, 1));
+            telemetry.addData("", "y");
         }
         else {
+            robot.piston.setPower(0);
+            robot.leftWheel.setPower(0);
+            robot.rightWheel.setPower(0);
+        }
+
+        if (a) {
+            robot.piston.setPower(1);
+            telemetry.addData("", "a");
+        }
+        else if (b) {
+            robot.piston.setPower(-1);
+            telemetry.addData("", "b");
+        }
+        else {
+            robot.piston.setPower(0);
             robot.leftWheel.setPower(0);
             robot.rightWheel.setPower(0);
         }
