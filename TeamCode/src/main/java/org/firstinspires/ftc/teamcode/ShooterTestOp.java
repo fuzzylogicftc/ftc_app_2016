@@ -111,7 +111,7 @@ public class ShooterTestOp extends OpMode{
             telemetry.addData("", "y");
         }
         else {
-            robot.piston.setPower(0);
+            // robot.piston.setPower(0);
             robot.leftWheel.setPower(0);
             robot.rightWheel.setPower(0);
         }

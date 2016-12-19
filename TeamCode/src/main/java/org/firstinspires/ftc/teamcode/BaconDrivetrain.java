@@ -112,15 +112,15 @@ public class BaconDrivetrain extends OpMode{
         leftScaled = scaleInput(leftRaw, lt, rt);
         rightScaled = scaleInput(rightRaw, lt, rt);
 
-        // Use gamepad left & right Bumpers to open and close the claw
-        if (x)
-            baconOffset += robot.BACON_SPEED ;
-        else if (y)
-            baconOffset -= robot.BACON_SPEED;
-
-        // Move both servos to new position.  Assume servos are mirror image of each other.
-        baconOffset = Range.clip(baconOffset, -0.5, 0.5);
-        robot.baconMotor.setPosition(robot.baconMotor.getPosition() + baconOffset);
+//        // Use gamepad left & right Bumpers to open and close the claw
+//        if (x)
+//            baconOffset += robot.BACON_SPEED ;
+//        else if (y)
+//            baconOffset -= robot.BACON_SPEED;
+//
+//        // Move both servos to new position.  Assume servos are mirror image of each other.
+//        baconOffset = Range.clip(baconOffset, -0.5, 0.5);
+//        robot.baconMotor.setPosition(robot.baconMotor.getPosition() + baconOffset);
 
         robot.leftMotor.setPower(leftScaled);
         robot.rightMotor.setPower(rightScaled);
@@ -169,16 +169,16 @@ public class BaconDrivetrain extends OpMode{
         return dScale;
     }
 
-    double getBacon(boolean rb, boolean lb) {
-        double bacon = 0.0;
-        if (rb) {
-            bacon = robot.BACON_SPEED;
-        }
-        else if (lb) {
-            bacon = -robot.BACON_SPEED;
-        }
-        return bacon;
-    }
+//    double getBacon(boolean rb, boolean lb) {
+//        double bacon = 0.0;
+//        if (rb) {
+//            bacon = robot.BACON_SPEED;
+//        }
+//        else if (lb) {
+//            bacon = -robot.BACON_SPEED;
+//        }
+//        return bacon;
+//    }
 
     @Override
     public void stop() {

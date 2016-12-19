@@ -23,10 +23,10 @@ public class BaconBot
     /* Public OpMode members. */
     public DcMotor  leftMotor   = null;
     public DcMotor  rightMotor  = null;
-    public Servo baconMotor = null;
+//    public Servo baconMotor = null;
 
-    public static final double MID_SERVO       =  0.5;
-    public static final double BACON_SPEED    =  0.001;
+//    public static final double MID_SERVO       =  0.5;
+//    public static final double BACON_SPEED    =  0.001;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -45,8 +45,8 @@ public class BaconBot
         // Define and Initialize Motors
         leftMotor   = hwMap.dcMotor.get("left_motor");
         rightMotor  = hwMap.dcMotor.get("right_motor");
-        baconMotor = hwMap.servo.get("bacon");
-        baconMotor.setPosition(MID_SERVO);
+//        baconMotor = hwMap.servo.get("bacon");
+//        baconMotor.setPosition(MID_SERVO);
         leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 

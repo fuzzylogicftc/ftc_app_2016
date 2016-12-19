@@ -25,7 +25,7 @@ public class ShooterTest
     /* Public OpMode members. */
     public DcMotor  leftWheel   = null;
     public DcMotor  rightWheel  = null;
-    public CRServo piston = null;
+     public CRServo piston = null;
 
 
     /* local OpMode members. */
@@ -45,10 +45,10 @@ public class ShooterTest
         // Define and Initialize Motors
         leftWheel   = hwMap.dcMotor.get("left_wheel");
         rightWheel  = hwMap.dcMotor.get("right_wheel");
-        piston = hwMap.crservo.get("pin");
+         piston = hwMap.crservo.get("pin");
 
 
-        piston.setDirection(CRServo.Direction.REVERSE);
+        // piston.setDirection(CRServo.Direction.REVERSE);
 
         leftWheel.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightWheel.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -56,7 +56,7 @@ public class ShooterTest
         // Set all motors to zero power
         leftWheel.setPower(0);
         rightWheel.setPower(0);
-        piston.setPower(0);
+         piston.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
