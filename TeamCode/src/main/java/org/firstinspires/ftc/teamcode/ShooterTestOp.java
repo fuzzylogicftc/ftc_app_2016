@@ -101,13 +101,13 @@ public class ShooterTestOp extends OpMode{
         b = gamepad1.b;
 
         if (x) {
-            robot.rightWheel.setPower(1);
-            robot.leftWheel.setPower(1);
+            robot.rightWheel.setPower(-1);
+            robot.leftWheel.setPower(-1);
             telemetry.addData("", "x");
         }
         else if (y) {
-            robot.leftWheel.setPower(-1);
-            robot.rightWheel.setPower(-1);
+            robot.leftWheel.setPower(1);
+            robot.rightWheel.setPower(1);
             telemetry.addData("", "y");
         }
         else {
@@ -117,7 +117,7 @@ public class ShooterTestOp extends OpMode{
         }
 
         if (a) {
-            robot.piston.setPower(1);
+            robot.piston.setPower(0.5);
             telemetry.addData("", "a");
         }
         else if (b) {
