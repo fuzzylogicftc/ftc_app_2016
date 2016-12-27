@@ -56,6 +56,7 @@ public class ShooterTestOp extends OpMode{
 
     /* Declare OpMode members. */
     ShooterTest robot = new ShooterTest();
+    double variablePower = 0;
      /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -83,6 +84,7 @@ public class ShooterTestOp extends OpMode{
      */
     @Override
     public void start() {
+
     }
 
     /*
@@ -100,20 +102,20 @@ public class ShooterTestOp extends OpMode{
         a = gamepad1.a;
         b = gamepad1.b;
 
+
         if (x) {
-            robot.rightWheel.setPower(-1);
-            robot.leftWheel.setPower(-1);
+            variablePower = Range.clip(variablePower - 0.01, -1, 0);
             telemetry.addData("", "x");
         }
         else if (y) {
-            robot.leftWheel.setPower(1);
-            robot.rightWheel.setPower(1);
+            variablePower = Range.clip(variablePower + 0.01, 0, 1);
             telemetry.addData("", "y");
         }
         else {
             // robot.piston.setPower(0);
             robot.leftWheel.setPower(0);
             robot.rightWheel.setPower(0);
+            variablePower = 0;
         }
 
         if (a) {
@@ -130,6 +132,8 @@ public class ShooterTestOp extends OpMode{
             robot.rightWheel.setPower(0);
         }
 
+        robot.rightWheel.setPower(variablePower);
+        robot.leftWheel.setPower(variablePower);
     }
 
 
