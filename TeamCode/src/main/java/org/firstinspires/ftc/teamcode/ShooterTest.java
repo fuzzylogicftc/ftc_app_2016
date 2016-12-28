@@ -50,8 +50,8 @@ public class ShooterTest
 
         // piston.setDirection(CRServo.Direction.REVERSE);
 
-        leftWheel.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        rightWheel.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        leftWheel.setDirection(DcMotor.Direction.FORWARD);
+        rightWheel.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         leftWheel.setPower(0);
