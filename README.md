@@ -2,4 +2,4 @@
 Android Studio project to create the FTC Robot Controller app
 
 This is the robot code for team Fuzzy Logic (#11123). 
-Email [nei.chowdhury@outlook.com](mailto:neil.chowdhury@outlook.com) for any questions.
+Email [neil.chowdhury@outlook.com](mailto:neil.chowdhury@outlook.com) for any questions.
