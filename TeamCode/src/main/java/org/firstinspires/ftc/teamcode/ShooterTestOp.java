@@ -92,22 +92,12 @@ public class ShooterTestOp extends OpMode{
      */
     @Override
     public void loop() {
-        boolean x;
-        boolean y;
-        boolean a;
-        boolean b;
 
-        x = gamepad1.x;
-        y = gamepad1.y;
-        a = gamepad1.a;
-        b = gamepad1.b;
-
-
-        if (x) {
+        if (gamepad1.x) {
             variablePower = Range.clip(variablePower - 0.01, -1, 0);
             telemetry.addData("", "x");
         }
-        else if (y) {
+        else if (gamepad1.y) {
             variablePower = Range.clip(variablePower + 0.01, 0, 1);
             telemetry.addData("", "y");
         }
@@ -118,11 +108,11 @@ public class ShooterTestOp extends OpMode{
             variablePower = 0;
         }
 
-        if (a) {
+        if (gamepad1.a) {
             robot.piston.setPower(0.5);
             telemetry.addData("", "a");
         }
-        else if (b) {
+        else if (gamepad1.b) {
             robot.piston.setPower(-1);
             telemetry.addData("", "b");
         }
