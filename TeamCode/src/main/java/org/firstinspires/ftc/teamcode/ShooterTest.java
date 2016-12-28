@@ -25,7 +25,7 @@ public class ShooterTest
     /* Public OpMode members. */
     public DcMotor  leftWheel   = null;
     public DcMotor  rightWheel  = null;
-     public CRServo piston = null;
+    public CRServo piston = null;
 
 
     /* local OpMode members. */
