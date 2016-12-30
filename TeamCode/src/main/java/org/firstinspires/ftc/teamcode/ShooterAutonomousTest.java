@@ -36,6 +36,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+import java.util.Timer;
 
 
 @Autonomous(name="Shooter Autonomous")
@@ -92,7 +95,7 @@ public class ShooterAutonomousTest extends LinearOpMode {
         sleep(10000);
         encoderDrive(DRIVE_SPEED,  53,  53, 10.0, LONG_PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
         encoderDrive(0.1,  -1, -1, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
-        encoderDrive(DRIVE_SPEED,  -70, 5, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout\
+        encoderDrive(DRIVE_SPEED,  -70, 5, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
         turnDrive(TURN_SPEED, -180, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
 
         telemetry.addData("Path", "Complete");
@@ -158,8 +161,26 @@ public class ShooterAutonomousTest extends LinearOpMode {
             sleep(movementPause);   // pause after each move so that movements are more accurate
         }
     }
-    public void turnDrive (double speed, double angle, double timeoutS, int movementPause) throws InterruptedException {
+    public void turnDrive(double speed, double angle, double timeoutS, int movementPause) throws InterruptedException {
         double arcLength = WHEEL_DIST_INCHES * PI / 360 * angle;
         encoderDrive(speed, arcLength, -arcLength, timeoutS, movementPause);
+    }
+    public void shoot() throws InterruptedException {
+        double variablePower = 0;
+        for (int i = 0; i < 201; i++) {
+            variablePower += Range.clip(i/100, 0, 1);
+            robot.leftWheel.setPower(-variablePower);
+            robot.rightWheel.setPower(-variablePower);
+            if (i == 100) {
+                robot.piston.setPower(1);
+            }
+            else if (i == 150) {
+                robot.piston.setPower(-0.5);
+            }
+            else if (i == 200) {
+                robot.piston.setPower(0);
+            }
+            wait(50);
+        }
     }
 }
