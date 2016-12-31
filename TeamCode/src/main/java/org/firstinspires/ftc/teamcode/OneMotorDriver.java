@@ -56,7 +56,7 @@ public class OneMotorDriver extends OpMode{
 
     /* Declare OpMode members. */
     OneMotorBot robot = new OneMotorBot();
-    double HARVESTER_SPEED = 0.7; // speed of the paddle
+    double HARVESTER_SPEED = 1.0; // speed of the paddle
     boolean harvesterOn = false;
     boolean harvesterBackward = false;
      /*
@@ -96,14 +96,22 @@ public class OneMotorDriver extends OpMode{
         if (gamepad1.left_bumper) {
             // toggle harvesterOn
             harvesterOn = !harvesterOn;
+            try {
+                Thread.sleep(500);
+            }
+            catch (java.lang.InterruptedException e) {}
         }
         if (gamepad1.right_bumper) {
             harvesterBackward = !harvesterBackward;
+            try {
+                Thread.sleep(500);
+            }
+            catch (java.lang.InterruptedException e) {}
         }
         if (harvesterOn && !harvesterBackward) {
-            robot.harvester.setPower(0.75);
+            robot.harvester.setPower(HARVESTER_SPEED);
         } else if (harvesterOn && harvesterBackward) {
-            robot.harvester.setPower(-0.75);
+            robot.harvester.setPower(-HARVESTER_SPEED);
         } else {
             robot.harvester.setPower(0);
         }
