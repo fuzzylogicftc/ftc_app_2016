@@ -65,8 +65,9 @@ public class ShooterDrivetrain extends OpMode{
     double rightScaled;
     double HARVESTER_SPEED = 1.0; // speed of the paddle
     boolean harvesterOn = false;
-    boolean harvesterBackward = true;
+    boolean harvesterBackward = false;
     double variablePower = 0;
+
      /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -128,19 +129,23 @@ public class ShooterDrivetrain extends OpMode{
             try {
                 Thread.sleep(500);
             }
-            catch (java.lang.InterruptedException e) {}
+            catch (java.lang.InterruptedException e) {
+                telemetry.addData("error", e);
+            }
         }
         if (gamepad1.right_bumper) {
             harvesterBackward = !harvesterBackward;
             try {
                 Thread.sleep(500);
             }
-            catch (java.lang.InterruptedException e) {}
+            catch (java.lang.InterruptedException e) {
+                telemetry.addData("error", e);
+            }
         }
         if (harvesterOn && !harvesterBackward) {
-            robot.harvester.setPower(HARVESTER_SPEED);
-        } else if (harvesterOn) {
             robot.harvester.setPower(-HARVESTER_SPEED);
+        } else if (harvesterOn) {
+            robot.harvester.setPower(0.1);
         } else {
             robot.harvester.setPower(0);
         }
