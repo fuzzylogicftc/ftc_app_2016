@@ -63,7 +63,9 @@ public class ShooterDrivetrain extends OpMode{
     double rightRaw;
     double leftScaled;
     double rightScaled;
+    double HARVESTER_SPEED = 1.0; // speed of the paddle
     boolean harvesterOn = false;
+    boolean harvesterBackward = true;
     double variablePower = 0;
      /*
      * Code to run ONCE when the driver hits INIT
@@ -109,8 +111,8 @@ public class ShooterDrivetrain extends OpMode{
         lt = gamepad1.left_trigger;
         rt = gamepad1.right_trigger;
 
-        leftRaw = -gamepad1.left_stick_y;
-        rightRaw = -gamepad1.right_stick_y;
+        leftRaw = gamepad1.left_stick_y;
+        rightRaw = gamepad1.right_stick_y;
 
         leftScaled = scaleInput(leftRaw, lt, rt);
         rightScaled = scaleInput(rightRaw, lt, rt);
@@ -123,9 +125,22 @@ public class ShooterDrivetrain extends OpMode{
         if (gamepad1.left_bumper) {
             // toggle harvesterOn
             harvesterOn = !harvesterOn;
+            try {
+                Thread.sleep(500);
+            }
+            catch (java.lang.InterruptedException e) {}
         }
-        if (harvesterOn) {
-            robot.harvester.setPower(0.75);
+        if (gamepad1.right_bumper) {
+            harvesterBackward = !harvesterBackward;
+            try {
+                Thread.sleep(500);
+            }
+            catch (java.lang.InterruptedException e) {}
+        }
+        if (harvesterOn && !harvesterBackward) {
+            robot.harvester.setPower(HARVESTER_SPEED);
+        } else if (harvesterOn) {
+            robot.harvester.setPower(-HARVESTER_SPEED);
         } else {
             robot.harvester.setPower(0);
         }
@@ -157,7 +172,7 @@ public class ShooterDrivetrain extends OpMode{
             robot.rightWheel.setPower(0);
         }
 
-        robot.rightWheel.setPower(variablePower);
+        robot.rightWheel.setPower(-variablePower);
         robot.leftWheel.setPower(variablePower);
 
 
@@ -197,11 +212,12 @@ public class ShooterDrivetrain extends OpMode{
         } else {
             dScale = scaleArray[index];
         }
-        double more_scale = 0.4;
-        if (rt >= 0.1) {
-            more_scale = Range.clip(more_scale + 0.6 * rt, 0, 1);
-        } else if (lt >= 0.1) {
-            more_scale = Range.clip(more_scale - 0.4 * lt, 0.05, 1);
+        double more_scale = 1;
+//        if (rt >= 0.1) {
+//            more_scale = Range.clip(more_scale + 0.6 * rt, 0, 1);
+//        } else
+        if (lt >= 0.1) {
+            more_scale = Range.clip(more_scale - 1.0 * lt, 0.05, 1);
         }
         dScale = dScale * more_scale;
         // return scaled value.
