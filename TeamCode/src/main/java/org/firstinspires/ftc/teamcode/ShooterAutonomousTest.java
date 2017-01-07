@@ -48,8 +48,8 @@ public class ShooterAutonomousTest extends LinearOpMode {
     ShooterBot robot   = new ShooterBot();
     private ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
+    static final double     COUNTS_PER_MOTOR_REV    = -1120 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1/40.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -92,11 +92,47 @@ public class ShooterAutonomousTest extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        sleep(10000);
-        encoderDrive(DRIVE_SPEED,  53,  53, 10.0, LONG_PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
-        encoderDrive(0.1,  -1, -1, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
-        encoderDrive(DRIVE_SPEED,  -70, 5, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
-        turnDrive(TURN_SPEED, -180, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        // encoderDrive(DRIVE_SPEED,  48,  48, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        robot.leftMotor.setPower(-0.5);
+        robot.rightMotor.setPower(-0.5);
+        try {
+            Thread.sleep(1000);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+        try {
+            Thread.sleep(500);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        shoot();
+        try {
+            Thread.sleep(500);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        shoot();
+        robot.leftMotor.setPower(-0.5);
+        robot.rightMotor.setPower(-0.5);
+        try {
+            Thread.sleep(1000);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+        try {
+            Thread.sleep(500);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -166,21 +202,104 @@ public class ShooterAutonomousTest extends LinearOpMode {
         encoderDrive(speed, arcLength, -arcLength, timeoutS, movementPause);
     }
     public void shoot() throws InterruptedException {
-        double variablePower = 0;
-        for (int i = 0; i < 201; i++) {
-            variablePower += Range.clip(i/100, 0, 1);
-            robot.leftWheel.setPower(-variablePower);
-            robot.rightWheel.setPower(-variablePower);
-            if (i == 100) {
-                robot.piston.setPower(1);
-            }
-            else if (i == 150) {
-                robot.piston.setPower(-0.5);
-            }
-            else if (i == 200) {
-                robot.piston.setPower(0);
-            }
-            wait(50);
+        // TODO copied from ShooterDrivetrain.java
+        robot.leftWheel.setPower(-0.1);
+        robot.rightWheel.setPower(0.1);
+        try {
+            Thread.sleep(50);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftWheel.setPower(-0.2);
+        robot.rightWheel.setPower(0.2);
+        try {
+            Thread.sleep(50);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftWheel.setPower(-0.3);
+        robot.rightWheel.setPower(0.3);
+        try {
+            Thread.sleep(50);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftWheel.setPower(-0.4);
+        robot.rightWheel.setPower(0.4);
+        try {
+            Thread.sleep(50);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftWheel.setPower(-0.5);
+        robot.rightWheel.setPower(0.5);
+        try {
+            Thread.sleep(50);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftWheel.setPower(-0.6);
+        robot.rightWheel.setPower(0.6);
+        try {
+            Thread.sleep(50);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftWheel.setPower(-0.7);
+        robot.rightWheel.setPower(0.7);
+        try {
+            Thread.sleep(50);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftWheel.setPower(-0.8);
+        robot.rightWheel.setPower(0.8);
+        try {
+            Thread.sleep(100);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftWheel.setPower(-0.9);
+        robot.rightWheel.setPower(0.9);
+        try {
+            Thread.sleep(100);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+
+        robot.leftWheel.setPower(-1);
+        robot.rightWheel.setPower(1);
+        try {
+            Thread.sleep(200);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.piston.setPower(-1);
+        try {
+            Thread.sleep(1800);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.piston.setPower(1);
+        try {
+            Thread.sleep(1800);
+        }
+        catch (java.lang.InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.piston.setPower(0);
+        robot.leftWheel.setPower(0);
+        robot.rightWheel.setPower(0);
         }
     }
-}
