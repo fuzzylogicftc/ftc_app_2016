@@ -162,7 +162,7 @@ public class ShooterDrivetrain extends OpMode{
             robot.leftWheel.setPower(-0.1);
             robot.rightWheel.setPower(0.1);
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
@@ -170,7 +170,7 @@ public class ShooterDrivetrain extends OpMode{
             robot.leftWheel.setPower(-0.2);
             robot.rightWheel.setPower(0.2);
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
@@ -178,7 +178,7 @@ public class ShooterDrivetrain extends OpMode{
             robot.leftWheel.setPower(-0.3);
             robot.rightWheel.setPower(0.3);
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
@@ -186,7 +186,7 @@ public class ShooterDrivetrain extends OpMode{
             robot.leftWheel.setPower(-0.4);
             robot.rightWheel.setPower(0.4);
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
@@ -194,7 +194,7 @@ public class ShooterDrivetrain extends OpMode{
             robot.leftWheel.setPower(-0.5);
             robot.rightWheel.setPower(0.5);
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
@@ -202,7 +202,7 @@ public class ShooterDrivetrain extends OpMode{
             robot.leftWheel.setPower(-0.6);
             robot.rightWheel.setPower(0.6);
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
@@ -210,7 +210,7 @@ public class ShooterDrivetrain extends OpMode{
             robot.leftWheel.setPower(-0.7);
             robot.rightWheel.setPower(0.7);
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
@@ -235,29 +235,21 @@ public class ShooterDrivetrain extends OpMode{
             robot.leftWheel.setPower(-1);
             robot.rightWheel.setPower(1);
             try {
-                Thread.sleep(500);
-            }
-            catch (java.lang.InterruptedException e) {
-                telemetry.addData("error", e);
-            }
-            robot.leftWheel.setPower(-1);
-            robot.rightWheel.setPower(1);
-            try {
-                Thread.sleep(500);
+                Thread.sleep(200);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.piston.setPower(-1);
             try {
-                Thread.sleep(1500);
+                Thread.sleep(1800);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.piston.setPower(1);
             try {
-                Thread.sleep(1500);
+                Thread.sleep(1800);
             }
             catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
