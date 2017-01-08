@@ -35,6 +35,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -48,8 +49,8 @@ public class ShooterAutonomousTest extends LinearOpMode {
     ShooterBot robot   = new ShooterBot();
     private ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = -1120 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 1/40.0 ;     // This is < 1.0 if geared UP
+    static final double     COUNTS_PER_MOTOR_REV    = 1120 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -69,6 +70,9 @@ public class ShooterAutonomousTest extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+
+        robot.leftMotor.setDirection(DcMotor.Direction.FORWARD);
+        robot.rightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -92,47 +96,41 @@ public class ShooterAutonomousTest extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        // encoderDrive(DRIVE_SPEED,  48,  48, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
-        robot.leftMotor.setPower(-0.5);
-        robot.rightMotor.setPower(-0.5);
+        encoderDrive(DRIVE_SPEED,  45,  45, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        robot.leftMotor.setPower(-1);
+        robot.rightMotor.setPower(-1);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         }
         catch (java.lang.InterruptedException e) {
             telemetry.addData("error", e);
         }
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
-        try {
-            Thread.sleep(500);
-        }
-        catch (java.lang.InterruptedException e) {
-            telemetry.addData("error", e);
-        }
-        shoot();
-        try {
-            Thread.sleep(500);
-        }
-        catch (java.lang.InterruptedException e) {
-            telemetry.addData("error", e);
-        }
-        shoot();
-        robot.leftMotor.setPower(-0.5);
-        robot.rightMotor.setPower(-0.5);
-        try {
-            Thread.sleep(1000);
-        }
-        catch (java.lang.InterruptedException e) {
-            telemetry.addData("error", e);
-        }
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
-        try {
-            Thread.sleep(500);
-        }
-        catch (java.lang.InterruptedException e) {
-            telemetry.addData("error", e);
-        }
+
+        encoderDrive(DRIVE_SPEED,  0,  10, 10.0, PAUSE_MOVEMENT);
+
+//        shoot();
+//        try {
+//            Thread.sleep(1000);
+//        }
+//        catch (java.lang.InterruptedException e) {
+//            telemetry.addData("error", e);
+//        }
+//        shoot();
+//        try {
+//            Thread.sleep(1000);
+//        }
+//        catch (java.lang.InterruptedException e) {
+//            telemetry.addData("error", e);
+//        }
+//
+//        encoderDrive(DRIVE_SPEED,  3,  0, 10.0, PAUSE_MOVEMENT);
+//
+//        encoderDrive(DRIVE_SPEED,  15,  15, 10.0, PAUSE_MOVEMENT);
+//
+//        encoderDrive(DRIVE_SPEED,  0,  5, 10.0, PAUSE_MOVEMENT);
+
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -157,12 +155,12 @@ public class ShooterAutonomousTest extends LinearOpMode {
             // Determine new target position, and pass to motor controller
             newLeftTarget = robot.leftMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newRightTarget = robot.rightMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            robot.leftMotor.setTargetPosition(newLeftTarget);
-            robot.rightMotor.setTargetPosition(newRightTarget);
-
-            // Turn On RUN_TO_POSITION
-            robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.leftMotor.setTargetPosition(-Math.abs(newLeftTarget));
+            robot.rightMotor.setTargetPosition(-Math.abs(newRightTarget));
+//
+//            // Turn On RUN_TO_POSITION
+//            robot.leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            robot.rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
@@ -176,7 +174,7 @@ public class ShooterAutonomousTest extends LinearOpMode {
                     (robot.leftMotor.isBusy() && robot.rightMotor.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                telemetry.addData("Path1",  "Running to %7d :%7d", -newLeftTarget,  -newRightTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
                         robot.leftMotor.getCurrentPosition(),
                         robot.rightMotor.getCurrentPosition());
@@ -254,36 +252,19 @@ public class ShooterAutonomousTest extends LinearOpMode {
         robot.leftWheel.setPower(-0.7);
         robot.rightWheel.setPower(0.7);
         try {
-            Thread.sleep(50);
+            Thread.sleep(500);
         }
         catch (java.lang.InterruptedException e) {
             telemetry.addData("error", e);
         }
-        robot.leftWheel.setPower(-0.8);
-        robot.rightWheel.setPower(0.8);
-        try {
-            Thread.sleep(100);
-        }
-        catch (java.lang.InterruptedException e) {
-            telemetry.addData("error", e);
-        }
-        robot.leftWheel.setPower(-0.9);
-        robot.rightWheel.setPower(0.9);
-        try {
-            Thread.sleep(100);
-        }
-        catch (java.lang.InterruptedException e) {
-            telemetry.addData("error", e);
-        }
-
-        robot.leftWheel.setPower(-1);
-        robot.rightWheel.setPower(1);
-        try {
-            Thread.sleep(200);
-        }
-        catch (java.lang.InterruptedException e) {
-            telemetry.addData("error", e);
-        }
+//        robot.leftWheel.setPower(-0.8);
+//        robot.rightWheel.setPower(0.8);
+//        try {
+//            Thread.sleep(500);
+//        }
+//        catch (java.lang.InterruptedException e) {
+//            telemetry.addData("error", e);
+//        }
         robot.piston.setPower(-1);
         try {
             Thread.sleep(1800);
