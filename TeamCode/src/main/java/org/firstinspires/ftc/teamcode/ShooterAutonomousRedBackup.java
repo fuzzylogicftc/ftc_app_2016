@@ -134,29 +134,16 @@ public class ShooterAutonomousRedBackup extends LinearOpMode {
 
         shoot();
 
-        robot.leftMotor.setPower(0.05);
-        robot.rightMotor.setPower(0.05);
+        robot.leftMotor.setPower(-0.05);
+        robot.rightMotor.setPower(-0.05);
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2500);
         }
         catch (InterruptedException e) {
             telemetry.addData("error", e);
         }
         robot.leftMotor.setPower(0);
         robot.rightMotor.setPower(0);
-
-        robot.leftMotor.setPower(-0.2);
-        robot.rightMotor.setPower(-0.2);
-        try {
-            Thread.sleep(200);
-        }
-        catch (InterruptedException e) {
-            telemetry.addData("error", e);
-        }
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
-
-
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

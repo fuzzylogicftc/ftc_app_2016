@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Autonomous Red")
+@Autonomous(name="Autonomous Red/Blue")
 public class ShooterAutonomousRed extends LinearOpMode {
 
     /* Declare OpMode members. */
