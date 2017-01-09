@@ -163,123 +163,79 @@ public class ShooterDrivetrain extends OpMode{
             robot.rightWheel.setPower(0.1);
             try {
                 Thread.sleep(50);
-            }
-            catch (java.lang.InterruptedException e) {
+            } catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.leftWheel.setPower(-0.2);
             robot.rightWheel.setPower(0.2);
             try {
                 Thread.sleep(50);
-            }
-            catch (java.lang.InterruptedException e) {
+            } catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.leftWheel.setPower(-0.3);
             robot.rightWheel.setPower(0.3);
             try {
                 Thread.sleep(50);
-            }
-            catch (java.lang.InterruptedException e) {
+            } catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.leftWheel.setPower(-0.4);
             robot.rightWheel.setPower(0.4);
             try {
                 Thread.sleep(50);
-            }
-            catch (java.lang.InterruptedException e) {
+            } catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.leftWheel.setPower(-0.5);
             robot.rightWheel.setPower(0.5);
             try {
                 Thread.sleep(50);
-            }
-            catch (java.lang.InterruptedException e) {
+            } catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.leftWheel.setPower(-0.6);
             robot.rightWheel.setPower(0.6);
             try {
                 Thread.sleep(50);
-            }
-            catch (java.lang.InterruptedException e) {
+            } catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.leftWheel.setPower(-0.7);
             robot.rightWheel.setPower(0.7);
             try {
-                Thread.sleep(50);
-            }
-            catch (java.lang.InterruptedException e) {
+                Thread.sleep(500);
+            } catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
-            robot.leftWheel.setPower(-0.8);
-            robot.rightWheel.setPower(0.8);
-            try {
-                Thread.sleep(100);
-            }
-            catch (java.lang.InterruptedException e) {
-                telemetry.addData("error", e);
-            }
-            robot.leftWheel.setPower(-0.9);
-            robot.rightWheel.setPower(0.9);
-            try {
-                Thread.sleep(100);
-            }
-            catch (java.lang.InterruptedException e) {
-                telemetry.addData("error", e);
-            }
-
-            robot.leftWheel.setPower(-1);
-            robot.rightWheel.setPower(1);
-            try {
-                Thread.sleep(200);
-            }
-            catch (java.lang.InterruptedException e) {
-                telemetry.addData("error", e);
-            }
+//        robot.leftWheel.setPower(-0.8);
+//        robot.rightWheel.setPower(0.8);
+//        try {
+//            Thread.sleep(500);
+//        }
+//        catch (java.lang.InterruptedException e) {
+//            telemetry.addData("error", e);
+//        }
             robot.piston.setPower(-1);
             try {
                 Thread.sleep(1800);
-            }
-            catch (java.lang.InterruptedException e) {
+            } catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.piston.setPower(1);
             try {
                 Thread.sleep(1800);
-            }
-            catch (java.lang.InterruptedException e) {
+            } catch (java.lang.InterruptedException e) {
                 telemetry.addData("error", e);
             }
             robot.piston.setPower(0);
             robot.leftWheel.setPower(0);
             robot.rightWheel.setPower(0);
-        }
-        else {
-            // robot.piston.setPower(0);
-            robot.leftWheel.setPower(0);
-            robot.rightWheel.setPower(0);
-            variablePower = 0;
-        }
 
-        if (gamepad1.a) {
-            robot.piston.setPower(0.5);
-        }
-        else if (gamepad1.b) {
-            robot.piston.setPower(-1);
-        }
-        else {
-            robot.piston.setPower(0);
-            robot.leftWheel.setPower(0);
-            robot.rightWheel.setPower(0);
-        }
 
+        }
         robot.rightWheel.setPower(-variablePower);
         robot.leftWheel.setPower(variablePower);
-
 
         // Add telemetry data
         telemetry.addData("left",  "%.2f", leftScaled);
