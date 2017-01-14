@@ -134,10 +134,22 @@ public class ShooterAutonomousBlueBackup extends LinearOpMode {
 
         shoot();
 
-        robot.leftMotor.setPower(-0.03);
-        robot.rightMotor.setPower(-0.07);
+        robot.leftMotor.setPower(-0.7);
+        robot.rightMotor.setPower(0.7);
         try {
-            Thread.sleep(2500);
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e) {
+            telemetry.addData("error", e);
+        }
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+
+
+        robot.leftMotor.setPower(-0.05);
+        robot.rightMotor.setPower(-0.05);
+        try {
+            Thread.sleep(2000);
         }
         catch (InterruptedException e) {
             telemetry.addData("error", e);
@@ -295,5 +307,5 @@ public class ShooterAutonomousBlueBackup extends LinearOpMode {
         robot.piston.setPower(0);
         robot.leftWheel.setPower(0);
         robot.rightWheel.setPower(0);
-        }
     }
+}
