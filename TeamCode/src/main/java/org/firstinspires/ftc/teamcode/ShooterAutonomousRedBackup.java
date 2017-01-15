@@ -93,7 +93,7 @@ public class ShooterAutonomousRedBackup extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(0.05,  46,  46, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(0.05,  38,  38, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
         robot.leftMotor.setPower(1);
         robot.rightMotor.setPower(1);
         try {

@@ -38,8 +38,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Autonomous Blue (only shoot)")
-public class ShooterAutonomousBlueBackup extends LinearOpMode {
+@Autonomous(name="Autonomous Red/Blue SHOOT ONLY")
+public class ShooterAutonomousRedBlueShootOnly extends LinearOpMode {
 
     /* Declare OpMode members. */
     ShooterBot robot   = new ShooterBot();
@@ -93,7 +93,7 @@ public class ShooterAutonomousBlueBackup extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(0.05,  38,  38, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
+        encoderDrive(0.05,  40,  40, 10.0, PAUSE_MOVEMENT);  // S1: forward 48 inches with 10 sec timeout
         robot.leftMotor.setPower(1);
         robot.rightMotor.setPower(1);
         try {
@@ -133,29 +133,6 @@ public class ShooterAutonomousBlueBackup extends LinearOpMode {
         robot.rightMotor.setPower(0);
 
         shoot();
-
-        robot.leftMotor.setPower(-0.7);
-        robot.rightMotor.setPower(0.7);
-        try {
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException e) {
-            telemetry.addData("error", e);
-        }
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
-
-
-        robot.leftMotor.setPower(-0.05);
-        robot.rightMotor.setPower(-0.05);
-        try {
-            Thread.sleep(2000);
-        }
-        catch (InterruptedException e) {
-            telemetry.addData("error", e);
-        }
-        robot.leftMotor.setPower(0);
-        robot.rightMotor.setPower(0);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -307,5 +284,5 @@ public class ShooterAutonomousBlueBackup extends LinearOpMode {
         robot.piston.setPower(0);
         robot.leftWheel.setPower(0);
         robot.rightWheel.setPower(0);
+        }
     }
-}
