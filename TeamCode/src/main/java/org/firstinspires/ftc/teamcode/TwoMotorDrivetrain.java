@@ -55,6 +55,7 @@ import org.firstinspires.ftc.teamcode.HardwareRobot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+@Disabled
 @TeleOp(name="Two Motor Drivetrain Test")
 public class TwoMotorDrivetrain extends OpMode{
 
