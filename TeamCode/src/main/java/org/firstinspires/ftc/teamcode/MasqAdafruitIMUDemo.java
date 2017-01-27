@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Created by Varun Singh, Lead Programmer of Team 4997 Masquerade.
  */
 
+@Disabled
 @TeleOp(name = "MasqAdafruitIMUDemo", group = "Demo")
 public class MasqAdafruitIMUDemo extends LinearOpMode {
 
