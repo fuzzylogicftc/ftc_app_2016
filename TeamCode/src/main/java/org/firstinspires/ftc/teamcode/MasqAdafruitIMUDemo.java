@@ -9,8 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Created by Varun Singh, Lead Programmer of Team 4997 Masquerade.
  */
 
-@Disabled
-@TeleOp(name = "MasqAdafruitIMUDemo", group = "Demo")
+@TeleOp(name = "(Old) MasqAdafruitIMUDemo", group = "Demo")
 public class MasqAdafruitIMUDemo extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
