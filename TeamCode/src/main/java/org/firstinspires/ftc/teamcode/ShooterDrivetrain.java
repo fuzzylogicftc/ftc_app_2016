@@ -152,10 +152,7 @@ public class ShooterDrivetrain extends OpMode{
 
 
         // Control the shooter
-        if (gamepad1.x) {
-            variablePower = Range.clip(variablePower - 0.01, -1, 0);
-        }
-        else if (gamepad1.y) {
+        if (gamepad1.y) {
             // autoshoot
 
             // for-loops glitch for some reason
